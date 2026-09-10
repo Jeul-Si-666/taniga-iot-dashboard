@@ -1,6 +1,6 @@
 "use client";
-import dynamic from "next/dynamic";
 
+import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import type { LatestTelemetry } from "@/types/telemetry";
 
@@ -29,7 +29,9 @@ export default function Dashboard() {
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.message || "Failed to load telemetry");
+        throw new Error(
+          result.message || "Failed to load telemetry"
+        );
       }
 
       setTelemetry(result.data);
@@ -52,7 +54,9 @@ export default function Dashboard() {
 
   const isOnline =
     telemetry !== null &&
-    Date.now() - new Date(telemetry.timestamp).getTime() < 120000;
+    Date.now() -
+      new Date(telemetry.timestamp).getTime() <
+      120000;
 
   return (
     <main className="min-h-screen bg-slate-950 text-white">
@@ -82,7 +86,9 @@ export default function Dashboard() {
             }`}
           >
             <span>●</span>
-            {isOnline ? "DEVICE ONLINE" : "DEVICE OFFLINE"}
+            {isOnline
+              ? "DEVICE ONLINE"
+              : "DEVICE OFFLINE"}
           </div>
         </header>
 
@@ -96,23 +102,32 @@ export default function Dashboard() {
         {/* DEVICE INFO */}
         <section className="mb-6 rounded-2xl border border-slate-800 bg-slate-900 p-6">
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+
             <div>
-              <p className="text-sm text-slate-500">Connected Device</p>
+              <p className="text-sm text-slate-500">
+                Connected Device
+              </p>
 
               <h2 className="mt-1 text-xl font-semibold">
-                {telemetry?.deviceId ?? "ESP32_TANIGA_001"}
+                {telemetry?.deviceId ??
+                  "ESP32_TANIGA_001"}
               </h2>
             </div>
 
             <div className="text-left md:text-right">
-              <p className="text-sm text-slate-500">Last Update</p>
+              <p className="text-sm text-slate-500">
+                Last Update
+              </p>
 
               <p className="mt-1 text-sm text-slate-300">
                 {telemetry
-                  ? new Date(telemetry.timestamp).toLocaleString("id-ID")
+                  ? new Date(
+                      telemetry.timestamp
+                    ).toLocaleString("id-ID")
                   : "Waiting for data..."}
               </p>
             </div>
+
           </div>
         </section>
 
@@ -129,8 +144,6 @@ export default function Dashboard() {
             }
             description="Current temperature"
           />
-
-         
 
           <MetricCard
             title="Latitude"
@@ -161,6 +174,7 @@ export default function Dashboard() {
 
           {/* GPS */}
           <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6">
+
             <div className="mb-6">
               <p className="text-sm font-medium text-cyan-400">
                 LOCATION
@@ -172,10 +186,12 @@ export default function Dashboard() {
             </div>
 
             <div className="rounded-xl border border-slate-800 bg-slate-950 p-6">
-              {telemetry?.lat !== null &&
-              telemetry?.lat !== undefined &&
-              telemetry?.lng !== null &&
-              telemetry?.lng !== undefined ? (
+
+              {telemetry &&
+              telemetry.lat !== null &&
+              telemetry.lat !== undefined &&
+              telemetry.lng !== null &&
+              telemetry.lng !== undefined ? (
                 <DeviceMap
                   lat={telemetry.lat}
                   lng={telemetry.lng}
@@ -183,15 +199,20 @@ export default function Dashboard() {
               ) : (
                 <div className="flex h-[350px] items-center justify-center rounded-xl border border-dashed border-slate-700">
                   <div className="text-center">
-                    <div className="text-4xl">⌖</div>
+
+                    <div className="text-4xl">
+                      ⌖
+                    </div>
 
                     <p className="mt-2 text-sm text-slate-500">
                       Waiting for GPS data...
                     </p>
+
                   </div>
                 </div>
               )}
-              <div className="grid grid-cols-2 gap-4">
+
+              <div className="mt-4 grid grid-cols-2 gap-4">
 
                 <Coordinate
                   label="Latitude"
@@ -209,6 +230,7 @@ export default function Dashboard() {
 
           {/* SYSTEM */}
           <div className="rounded-2xl border border-slate-800 bg-slate-900 p-6">
+
             <div className="mb-6">
               <p className="text-sm font-medium text-cyan-400">
                 SYSTEM
@@ -223,25 +245,41 @@ export default function Dashboard() {
 
               <StatusRow
                 label="ESP32"
-                status={isOnline ? "Online" : "Offline"}
+                status={
+                  isOnline
+                    ? "Online"
+                    : "Offline"
+                }
                 active={isOnline}
               />
 
               <StatusRow
                 label="Telemetry"
-                status={telemetry ? "Receiving" : "No Data"}
+                status={
+                  telemetry
+                    ? "Receiving"
+                    : "No Data"
+                }
                 active={telemetry !== null}
               />
 
               <StatusRow
                 label="API"
-                status={telemetry ? "Connected" : "Unknown"}
+                status={
+                  telemetry
+                    ? "Connected"
+                    : "Unknown"
+                }
                 active={telemetry !== null}
               />
 
               <StatusRow
                 label="Firebase"
-                status={telemetry ? "Connected" : "Unknown"}
+                status={
+                  telemetry
+                    ? "Connected"
+                    : "Unknown"
+                }
                 active={telemetry !== null}
               />
 
@@ -271,6 +309,7 @@ function MetricCard({
 }) {
   return (
     <div className="rounded-2xl border border-slate-800 bg-slate-900 p-5 transition hover:border-slate-700">
+
       <p className="text-sm text-slate-400">
         {title}
       </p>
@@ -282,6 +321,7 @@ function MetricCard({
       <p className="mt-2 text-xs text-slate-600">
         {description}
       </p>
+
     </div>
   );
 }
@@ -295,15 +335,18 @@ function Coordinate({
 }) {
   return (
     <div>
+
       <p className="text-xs text-slate-500">
         {label}
       </p>
 
       <p className="mt-1 font-mono text-sm text-slate-300">
-        {value !== null && value !== undefined
+        {value !== null &&
+        value !== undefined
           ? value.toFixed(6)
           : "--"}
       </p>
+
     </div>
   );
 }
@@ -319,6 +362,7 @@ function StatusRow({
 }) {
   return (
     <div className="flex items-center justify-between border-b border-slate-800 py-4 last:border-b-0">
+
       <span className="text-sm text-slate-300">
         {label}
       </span>
@@ -332,6 +376,7 @@ function StatusRow({
       >
         ● {status}
       </span>
+
     </div>
   );
 }
