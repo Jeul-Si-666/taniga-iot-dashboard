@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TANIGA IoT Dashboard
 
-## Getting Started
+Real-time IoT monitoring dashboard untuk memantau telemetry
+perangkat melalui web.
 
-First, run the development server:
+## Overview
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+TANIGA merupakan sistem monitoring IoT yang menghubungkan
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+perangkat ESP32 dengan web dashboard.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Sistem menerima data telemetry seperti:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Temperature
+- GPS Latitude
+- GPS Longitude
+- Device Status
 
-## Learn More
+Data kemudian ditampilkan pada dashboard secara real-time.
 
-To learn more about Next.js, take a look at the following resources:
+## System Architecture
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+ESP32
+  ↓
+WiFi
+  ↓
+IoT API
+  ↓
+Firebase
+  ↓
+Next.js Dashboard
+  ↓
+Web Map
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Hardware
 
-## Deploy on Vercel
+Perangkat menggunakan ESP32 sebagai microcontroller utama.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Detail rangkaian dapat dilihat pada:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+`hardware/`
+
+## Dashboard
+
+Dashboard menampilkan:
+
+- Device status
+- Temperature
+- GPS coordinates
+- Device location pada map
+- Last telemetry update
+
+## Technologies
+
+### Hardware
+- ESP32
+- GPS
+- Temperature Sensor
+
+### Backend
+- Next.js API Routes
+- Firebase
+
+### Frontend
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- Leaflet
+- OpenStreetMap
+
+## Deployment
+
+Dashboard di-deploy menggunakan Vercel.
+
+## Project Structure
+
+```text
+app/          → Next.js application
+components/   → Reusable UI components
+types/        → TypeScript types
+hardware/     → Hardware documentation
+public/       → Public assets
